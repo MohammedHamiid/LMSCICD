@@ -1,0 +1,24 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and upload to TestApp.io"
+  lane :beta do
+   gym(
+  scheme: "LMSCICD",
+  export_method: "ad-hoc",  # ← استخدم "development" لو بتجرب على جهازك فقط
+  export_options: {
+    signingStyle: "automatic"
+  },
+  xcargs: "-allowProvisioningUpdates"
+)
+
+    ipa_path = Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]
+
+    sh <<-EOF
+      curl -X POST https://upload.testapp.io/api/apps/9QorGVmE7M/builds \
+        -H "Authorization: Bearer 0db11f3c-d0d7-4b1c-8c76-8197063b74a5" \
+        -F "file=@#{ipa_path}" \
+        -F "release_notes=Uploaded automatically via Fastlane 🎉"
+    EOF
+  end
+end

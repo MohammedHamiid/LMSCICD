@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000251">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: gym" time="19.85867">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2:       curl -X POST https://upload.testapp.io/api/apps/9QorGVmE7M/builds         -H &quot;Authorization: Bearer 0db11f3c-d0d7-4b1c-8c76-8197063b74a5&quot;         -F &quot;file=@/Users/benhamid/Desktop/LMSCICD/LMSCICD.ipa&quot;         -F &quot;release_notes=Uploaded automatically via Fastlane 🎉&quot;
+" time="1.540867">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

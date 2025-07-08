@@ -1,0 +1,36 @@
+name: iOS CI & Upload to TestApp.io
+
+on:
+  push:
+    branches: [ main ]  # أو غيّرها حسب الفرع اللي تحب تتابعه
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: 🔁 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2
+
+    - name: 💎 Install Bundler & Fastlane
+      run: |
+        gem install bundler
+        bundle install
+
+    - name: 🔐 Set up keychain for code signing
+      run: |
+        security create-keychain -p "" build.keychain
+        security default-keychain -s build.keychain
+        security unlock-keychain -p "" build.keychain
+        security set-keychain-settings build.keychain
+
+    - name: 🚀 Build & Upload using Fastlane
+      env:
+        TESTAPP_API_KEY: ${{ secrets.TESTAPP_API_KEY }}
+      run: bundle exec fastlane ios beta
+
