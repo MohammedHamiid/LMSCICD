@@ -2,7 +2,10 @@ name: iOS CI & Upload to TestApp.io
 
 on:
   push:
-    branches: [ main ]  # أو غيّرها حسب الفرع اللي تحب تتابعه
+    branches:
+      - main  # Adjust the branch if needed
+  tags:
+    - 'v*'  # Optional: trigger on version tags (e.g., v1.0.0)
 
 jobs:
   build:
@@ -32,5 +35,7 @@ jobs:
     - name: 🚀 Build & Upload using Fastlane
       env:
         TESTAPP_API_KEY: ${{ secrets.TESTAPP_API_KEY }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
       run: bundle exec fastlane ios beta
 
