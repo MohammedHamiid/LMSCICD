@@ -3,9 +3,10 @@ name: iOS CI & Upload to TestApp.io
 on:
   push:
     branches:
-      - main  # Adjust the branch if needed
-  tags:
-    - 'v*'  # Optional: trigger on version tags (e.g., v1.0.0)
+      - main  # أو أي فرع آخر تود متابعته
+  # إذا أردت أن يتفعل الـ CI عند إضافة tag، استخدم هذا القسم:
+  # tags:
+  #   - 'v*'
 
 jobs:
   build:
@@ -38,4 +39,3 @@ jobs:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
       run: bundle exec fastlane ios beta
-
