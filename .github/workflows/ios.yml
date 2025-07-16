@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main  # Or any other branch you want to track
+  # If you want it to trigger on tag creation, use this section:
+  # tags:
+  #   - 'v*'
 
 jobs:
   build:
@@ -33,12 +36,9 @@ jobs:
     - name: 🚀 Build & Upload using Fastlane
       env:
         TESTAPP_API_KEY: ${{ secrets.TESTAPP_API_KEY }}
-        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
         FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-        FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-        FASTLANE_APP_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APP_SPECIFIC_PASSWORD }}
+        FASTLANE_API_KEY_ID: ${{ secrets.FASTLANE_API_KEY_ID }}
+        FASTLANE_API_ISSUER_ID: ${{ secrets.FASTLANE_API_ISSUER_ID }}
+        FASTLANE_API_KEY: ${{ secrets.FASTLANE_API_KEY }}
       run: bundle exec fastlane ios beta
-
-
 
