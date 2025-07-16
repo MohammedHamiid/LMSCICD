@@ -40,5 +40,6 @@ jobs:
         FASTLANE_API_KEY_ID: ${{ secrets.FASTLANE_API_KEY_ID }}
         FASTLANE_API_ISSUER_ID: ${{ secrets.FASTLANE_API_ISSUER_ID }}
         FASTLANE_API_KEY: ${{ secrets.FASTLANE_API_KEY }}
+        MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }} # Added the MATCH_GIT_URL secret here
       run: bundle exec fastlane ios beta
 
