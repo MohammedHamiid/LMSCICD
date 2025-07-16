@@ -2,18 +2,24 @@ default_platform(:ios)
 
 platform :ios do
   desc "Build and upload to TestApp.io"
-  lane :beta do  # تأكد من أنك تستخدم lane :beta وليس ios beta
+  lane :beta do
+    # Ensure the required environment variables are set
+    if ENV['FASTLANE_USER'].nil? || ENV['FASTLANE_APP_SPECIFIC_PASSWORD'].nil? || ENV['TESTAPP_API_KEY'].nil?
+      UI.user_error!("Required environment variables are missing. Please check FASTLANE_USER, FASTLANE_APP_SPECIFIC_PASSWORD, and TESTAPP_API_KEY.")
+    end
+
     # Use fastlane match to fetch certificates and provisioning profiles
     match(
-      type: "adhoc",
-      username: ENV['FASTLANE_USER'],
-      app_identifier: "com.benhamid.LMSCICD",
-      api_key: { "app_specific_password" => ENV['FASTLANE_APP_SPECIFIC_PASSWORD'] }
-    )  # This will pull certificates and provisioning profiles
+      type: "adhoc", 
+      username: ENV['FASTLANE_USER'],  # Ensure this is set correctly
+      app_identifier: "com.benhamid.LMSCICD",  # Replace with your actual app identifier
+      api_key: ENV['FASTLANE_APP_SPECIFIC_PASSWORD']  # This is your app-specific password
+    )
 
+    # Build the app using gym
     gym(
-      scheme: "LMSCICD",  # Ensure this is your actual scheme
-      export_method: "ad-hoc",
+      scheme: "LMSCICD",  # Replace with your actual scheme
+      export_method: "ad-hoc",  # Use 'app-store' if you're distributing via the App Store
       export_options: {
         signingStyle: "automatic",
         provisioningProfiles: {
@@ -23,6 +29,7 @@ platform :ios do
       xcargs: "-allowProvisioningUpdates"
     )
 
+    # Get the path of the generated IPA
     ipa_path = Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]
 
     # Upload to TestApp.io
