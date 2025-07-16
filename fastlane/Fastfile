@@ -6,7 +6,8 @@ platform :ios do
     # Use fastlane match to fetch certificates and provisioning profiles
     match(
       type: "adhoc", 
-      username: ENV['FASTLANE_USER'] 
+      username: ENV['FASTLANE_USER'],
+      app_identifier: "com.benhamid.LMSCICD"
     )  # This will pull certificates and provisioning profiles
 
     gym(
