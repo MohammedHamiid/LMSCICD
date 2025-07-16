@@ -4,15 +4,18 @@ platform :ios do
   lane :beta do |options|
     match(
       type: "adhoc", 
-      username: ENV['FASTLANE_USER'],
-      app_identifier: "com.benhamid.LMSCICD",
+      username: ENV['FASTLANE_USER'], 
+      app_identifier: "com.benhamid.LMSCICD", 
       api_key: {
         key_id: ENV['FASTLANE_API_KEY_ID'],
         issuer_id: ENV['FASTLANE_API_ISSUER_ID'],
         key: ENV['FASTLANE_API_KEY']
       },
       git_url: ENV['MATCH_GIT_URL'],
-      # Removed match_password and using the environment variable MATCH_PASSWORD
+      git_branch: "main",  # Use the 'main' branch instead of 'master'
+      match_password: ENV['MATCH_PASSWORD'],  # Use MATCH_PASSWORD for accessing the cert repo
+      readonly: false,
+      force_for_new_devices: true
     )
 
     gym(export_xcargs: "-allowProvisioningUpdates", export_method: "ad-hoc")
