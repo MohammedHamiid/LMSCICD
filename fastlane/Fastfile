@@ -1,36 +1,31 @@
-default_platform(:ios)
+lane :beta do
+  # Use fastlane match to fetch certificates and provisioning profiles
+  match(
+    type: "adhoc",
+    username: ENV['FASTLANE_USER'],
+    app_identifier: "com.benhamid.LMSCICD",  # تم تعديل الفاصلة هنا
+    api_key: ENV['FASTLANE_APP_SPECIFIC_PASSWORD']
+  )  # This will pull certificates and provisioning profiles
 
-platform :ios do
-  desc "Build and upload to TestApp.io"
-  lane :beta do
-    # Use fastlane match to fetch certificates and provisioning profiles
-    match(
-      type: "adhoc", 
-      username: ENV['FASTLANE_USER'],
-      app_identifier: "com.benhamid.LMSCICD"،
-      api_key: ENV['FASTLANE_APP_SPECIFIC_PASSWORD']
-    )  # This will pull certificates and provisioning profiles
+  gym(
+    scheme: "LMSCICD",  # Ensure this is your actual scheme
+    export_method: "ad-hoc",
+    export_options: {
+      signingStyle: "automatic",
+      provisioningProfiles: {
+        "com.benhamid.LMSCICD" => "match AdHoc com.benhamid.LMSCICD"
+      }
+    },
+    xcargs: "-allowProvisioningUpdates"
+  )
 
-    gym(
-      scheme: "LMSCICD",  # Ensure this is your actual scheme
-      export_method: "ad-hoc",
-      export_options: {
-        signingStyle: "automatic",
-        provisioningProfiles: {
-          "com.benhamid.LMSCICD" => "match AdHoc com.benhamid.LMSCICD"
-        }
-      },
-      xcargs: "-allowProvisioningUpdates"
-    )
+  ipa_path = Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]
 
-    ipa_path = Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]
-
-    # Upload to TestApp.io
-    sh <<-EOF
-      curl -X POST https://upload.testapp.io/api/apps/9QorGVmE7M/builds \
-        -H "Authorization: Bearer #{ENV['TESTAPP_API_KEY']}" \
-        -F "file=@#{ipa_path}" \
-        -F "release_notes=Uploaded automatically via Fastlane 🎉"
-    EOF
-  end
+  # Upload to TestApp.io
+  sh <<-EOF
+    curl -X POST https://upload.testapp.io/api/apps/9QorGVmE7M/builds \
+      -H "Authorization: Bearer #{ENV['TESTAPP_API_KEY']}" \
+      -F "file=@#{ipa_path}" \
+      -F "release_notes=Uploaded automatically via Fastlane 🎉"
+  EOF
 end
