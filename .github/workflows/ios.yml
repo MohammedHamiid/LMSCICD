@@ -3,10 +3,7 @@ name: iOS CI & Upload to TestApp.io
 on:
   push:
     branches:
-      - main  # أو أي فرع آخر تود متابعته
-  # إذا أردت أن يتفعل الـ CI عند إضافة tag، استخدم هذا القسم:
-  # tags:
-  #   - 'v*'
+      - main  # Or any other branch you want to track
 
 jobs:
   build:
