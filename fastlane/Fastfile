@@ -1,3 +1,5 @@
+default_platform(:ios)
+
 platform :ios do
   desc "Build and upload to TestApp.io"
   lane :beta do
@@ -11,8 +13,7 @@ platform :ios do
         issuer_id: ENV['FASTLANE_API_ISSUER_ID'],
         key: ENV['FASTLANE_API_KEY']
       },
-      git_url: ENV['MATCH_GIT_URL'],
-      password: ENV['MATCH_PASSWORD']  # Added MATCH_PASSWORD environment variable
+      git_url: ENV['MATCH_GIT_URL'] # Git URL for certificates
     ) # This will pull certificates and provisioning profiles
 
     gym(
