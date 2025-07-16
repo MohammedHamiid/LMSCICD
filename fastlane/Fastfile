@@ -1,5 +1,3 @@
-default_platform(:ios)
-
 platform :ios do
   desc "Build and upload to TestApp.io"
   lane :beta do
@@ -9,11 +7,12 @@ platform :ios do
       username: ENV['FASTLANE_USER'], # Ensure this is set correctly
       app_identifier: "com.benhamid.LMSCICD", 
       api_key: {
-        key_id: ENV['FASTLANE_API_KEY_ID'], # Make sure FASTLANE_API_KEY_ID is set in your environment
-        issuer_id: ENV['FASTLANE_API_ISSUER_ID'], # Make sure FASTLANE_API_ISSUER_ID is set in your environment
-        key: ENV['FASTLANE_API_KEY'] # Make sure FASTLANE_API_KEY is set in your environment
+        key_id: ENV['FASTLANE_API_KEY_ID'],
+        issuer_id: ENV['FASTLANE_API_ISSUER_ID'],
+        key: ENV['FASTLANE_API_KEY']
       },
-      git_url: ENV['MATCH_GIT_URL'] # Add the Git URL for certificates repository
+      git_url: ENV['MATCH_GIT_URL'],
+      password: ENV['MATCH_PASSWORD']  # Added MATCH_PASSWORD environment variable
     ) # This will pull certificates and provisioning profiles
 
     gym(
