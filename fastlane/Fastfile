@@ -8,9 +8,7 @@ platform :ios do
       type: "adhoc",
       username: ENV['FASTLANE_USER'],
       app_identifier: "com.benhamid.LMSCICD",
-      api_key: {
-        "app_specific_password" => ENV['FASTLANE_APP_SPECIFIC_PASSWORD']
-      }
+      api_key: { "app_specific_password" => ENV['FASTLANE_APP_SPECIFIC_PASSWORD'] }
     )  # This will pull certificates and provisioning profiles
 
     gym(
