@@ -36,6 +36,6 @@ jobs:
     - name: 🚀 Build & Upload using Fastlane
       env:
         TESTAPP_API_KEY: ${{ secrets.TESTAPP_API_KEY }}
-        MATCH_PASSWORD: 'benhamid'
+        MATCH_PASSWORD: 'ؤخخخ@١٢٣'
         MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
       run: bundle exec fastlane ios beta
