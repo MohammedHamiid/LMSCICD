@@ -13,7 +13,6 @@ platform :ios do
       },
       git_url: ENV['MATCH_GIT_URL'],
       git_branch: "main",  # Use the 'main' branch instead of 'master'
-      match_password: ENV['MATCH_PASSWORD'],  # Use MATCH_PASSWORD for accessing the cert repo
       readonly: false,
       force_for_new_devices: true
     )
