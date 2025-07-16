@@ -23,13 +23,6 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: 🔐 Set up keychain for code signing
-      run: |
-        security create-keychain -p "" build.keychain
-        security default-keychain -s build.keychain
-        security unlock-keychain -p "" build.keychain
-        security set-keychain-settings build.keychain
-
     - name: 🚀 Build & Upload using Fastlane
       env:
         TESTAPP_API_KEY: ${{ secrets.TESTAPP_API_KEY }}
@@ -38,6 +31,6 @@ jobs:
         FASTLANE_API_ISSUER_ID: ${{ secrets.FASTLANE_API_ISSUER_ID }}
         FASTLANE_API_KEY: ${{ secrets.FASTLANE_API_KEY }}
         MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-        KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}  # Ensure MATCH_PASSWORD is set
       run: bundle exec fastlane ios beta
 
