@@ -31,6 +31,6 @@ jobs:
         FASTLANE_API_ISSUER_ID: ${{ secrets.FASTLANE_API_ISSUER_ID }}
         FASTLANE_API_KEY: ${{ secrets.FASTLANE_API_KEY }}
         MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}  # Ensure MATCH_PASSWORD is set
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}  # Ensure this is correctly set in your GitHub secrets
       run: bundle exec fastlane ios beta
 
