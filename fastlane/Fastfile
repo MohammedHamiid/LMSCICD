@@ -4,7 +4,11 @@ platform :ios do
   desc "Build and upload to TestApp.io"
   lane :beta do
     # Use fastlane match to fetch certificates and provisioning profiles
-    match(type: "adhoc")  # This will pull certificates and provisioning profiles
+    match(
+      type: "adhoc", 
+      username: ENV['FASTLANE_USER'], 
+      password: ENV['FASTLANE_PASSWORD']
+    )  # This will pull certificates and provisioning profiles
 
     gym(
       scheme: "LMSCICD",  # Ensure this is your actual scheme
@@ -29,4 +33,3 @@ platform :ios do
     EOF
   end
 end
-
