@@ -6,18 +6,19 @@ platform :ios do
     # Use fastlane match to fetch certificates and provisioning profiles
     match(
       type: "adhoc", 
-      username: ENV['FASTLANE_USER'], # Ensure this is set correctly
-      app_identifier: "com.benhamid.LMSCICD", 
+      username: ENV['FASTLANE_USER'],
+      app_identifier: "com.benhamid.LMSCICD",
       api_key: {
         key_id: ENV['FASTLANE_API_KEY_ID'],
         issuer_id: ENV['FASTLANE_API_ISSUER_ID'],
-        key: ENV['FASTLANE_API_KEY']
+        key: ENV['FASTLANE_API_KEY'],
+        in_house: true  # Set to true if using In-House distribution
       },
-      git_url: ENV['MATCH_GIT_URL'] # Git URL for certificates
-    ) # This will pull certificates and provisioning profiles
+      git_url: ENV['MATCH_GIT_URL']
+    )
 
     gym(
-      scheme: "LMSCICD",  # Ensure this is your actual scheme
+      scheme: "LMSCICD",  
       export_method: "ad-hoc",
       export_options: {
         signingStyle: "automatic",
