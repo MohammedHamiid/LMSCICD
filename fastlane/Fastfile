@@ -1,32 +1,28 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Build and upload to TestApp.io"
-  lane :beta do
+
+  lane :beta do |options|
     # Use fastlane match to fetch certificates and provisioning profiles
     match(
       type: "adhoc", 
-      username: ENV['FASTLANE_USER'],
-      app_identifier: "com.benhamid.LMSCICD",
+      username: ENV['FASTLANE_USER'], # Ensure this is set correctly
+      app_identifier: "com.benhamid.LMSCICD", 
       api_key: {
         key_id: ENV['FASTLANE_API_KEY_ID'],
         issuer_id: ENV['FASTLANE_API_ISSUER_ID'],
-        key: ENV['FASTLANE_API_KEY'],
-        in_house: true  # Set to true if using In-House distribution
+        key: ENV['FASTLANE_API_KEY']
       },
-      git_url: ENV['MATCH_GIT_URL']
-    )
+      git_url: ENV['MATCH_GIT_URL'],
+      keychain_password: ENV['KEYCHAIN_PASSWORD']
+    ) # This will pull certificates and provisioning profiles
 
     gym(
-      scheme: "LMSCICD",  
-      export_method: "ad-hoc",
-      export_options: {
-        signingStyle: "automatic",
-        provisioningProfiles: {
-          "com.benhamid.LMSCICD" => "match AdHoc com.benhamid.LMSCICD"
-        }
-      },
-      xcargs: "-allowProvisioningUpdates"
+      export_xcargs: "-allowProvisioningUpdates", 
+      configuration: "CD Staging Release", 
+      silent: true, 
+      suppress_xcode_output: false, 
+      export_method: "ad-hoc"
     )
 
     ipa_path = Actions.lane_context[SharedValues::IPA_OUTPUT_PATH]
