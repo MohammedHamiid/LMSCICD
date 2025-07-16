@@ -12,7 +12,7 @@ platform :ios do
         key: ENV['FASTLANE_API_KEY']
       },
       git_url: ENV['MATCH_GIT_URL'],
-      # Remove match_password from here. It will be handled as an environment variable.
+      # Removed match_password and using the environment variable MATCH_PASSWORD
     )
 
     gym(export_xcargs: "-allowProvisioningUpdates", export_method: "ad-hoc")
